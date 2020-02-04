@@ -20,6 +20,9 @@
 #undef mips
 #define mips mips
 OUTPUT_ARCH(mips)
+/*
+Linux linker script entry point symbol for mips
+*/
 ENTRY(kernel_entry)
 PHDRS {
 	text PT_LOAD FLAGS(7);	/* RWX */

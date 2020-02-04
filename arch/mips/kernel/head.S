@@ -67,6 +67,35 @@
 	.fill	0x400
 #endif
 
+/*
+Mips vmlinux.64 start execution form here:
+ffffffff81100000 T _text
+ffffffff81100000 t .text
+ffffffff81100400 00000000000000a4 t initcall_blacklisted        kernel/init/main.c
+ffffffff81100400 T _stext       init/main.c:773
+
+55436: ffffffff81100400     0 OBJECT  GLOBAL DEFAULT    1 _stext
+
+Elf file type is EXEC (Executable file)
+Entry point 0xffffffff818f4520 this entry point correspond to delow instruction jump to kernel_entry
+There are 2 program headers, starting at offset 64
+
+Program Headers:
+  Type           Offset             VirtAddr           PhysAddr
+                 FileSiz            MemSiz              Flags  Align
+  LOAD           0x0000000000001000 0xffffffff81100000 0xffffffff81100000
+                 0x0000000000c14f20 0x0000000000d6d200  RWE    0x1000
+  NOTE           0x0000000000804aa0 0xffffffff81903aa0 0xffffffff81903aa0
+                 0x0000000000000024 0x0000000000000024  R      0x4
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .text __ex_table .notes .rodata .pci_fixup __ksymtab __ksymtab_gpl __ksymtab_strings __param __modver .data .data..page_aligned .init.text .init.data .exit.text .rel.dyn .data..percpu .bss
+   01     .notes
+
+
+
+*/
 EXPORT(_stext)
 
 #ifdef CONFIG_BOOT_RAW
@@ -76,6 +105,7 @@ EXPORT(_stext)
 	 * not have a ELF loader yet.
 	 */
 FEXPORT(__kernel_entry)
+//49016: ffffffff818f4520   840 FUNC    GLOBAL DEFAULT    1 kernel_entry
 	j	kernel_entry
 #endif /* CONFIG_BOOT_RAW */
 

@@ -1083,11 +1083,27 @@ void __init plat_mem_setup(void)
 	}
 	cvmx_bootmem_unlock();
 	/* Add the memory region for the kernel. */
+	/* 59576: ffffffff81100000     0 NOTYPE  GLOBAL DEFAULT    1 _text
+	 * 61281: ffffffff81e6d200     0 NOTYPE  GLOBAL DEFAULT   18 _end
+	 * ffffffff81e6d200 - ffffffff81100000 = 0xD6D200
+	 *
+	 * entry point 0xffffffff81903aa0
+	 */
 	kernel_start = (unsigned long) _text;
 	kernel_size = _end - _text;
 
 	/* Adjust for physical offset. */
 	kernel_start &= ~0xffffffff80000000ULL;
+	81100000 &= ~0xffffffff80000000ULL;
+	/* 0xffffffff81100000 &=
+	~0xffffffff80000000;
+
+	 0xffffffff81100000 &=
+	 0x000000007FFFFFFF =
+	 0x0000000001100000 -> 17MB offset from physical memory start put kernel there
+
+	 load-$(CONFIG_CAVIUM_OCTEON_SOC) += 0xffffffff81100000
+	/*
 	add_memory_region(kernel_start, kernel_size, BOOT_MEM_RAM);
 #endif /* CONFIG_CRASH_DUMP */
 

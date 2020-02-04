@@ -18,6 +18,8 @@ extern unsigned long rd_size;
 extern int initrd_below_start_ok;
 
 /* free_initrd_mem always gets called with the next two as arguments.. */
+// ffffffff81d44078 0000000000000008 B initrd_end
+// ffffffff81d44080 0000000000000008 B initrd_start
 extern unsigned long initrd_start, initrd_end;
 extern void free_initrd_mem(unsigned long, unsigned long);
 

@@ -48,7 +48,7 @@ start:
 	jr	k0
 	 nop
 3:
-	b	3b
+	b	3b  /* 3b refers local label 3: (b - backwards, 3f - label 3 forwards) */
 	 nop
 	END(start)
 
